@@ -139,6 +139,48 @@
     transition: background .15s ease, color .15s ease;
   }
   .topnav__key { color: var(--ink-3); }
+
+  /* Vertical divider between lab tabs and section links */
+  .topnav__divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(24, 24, 24, 0.2);
+    margin: 0 12px;
+  }
+  /* Section links: lighter visual weight, no key prefix; in-page jumps */
+  .topnav__section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color .15s ease, background .15s ease;
+  }
+  .topnav__section-link:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .topnav__section-link::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    background: transparent;
+  }
+  .topnav__section-link.is-active { color: var(--ink); }
+  .topnav__section-link.is-active::before { background: var(--ink); }
+
+  @media (max-width: 1100px) {
+    .topnav__divider { display: none; }
+    .topnav__section-link { font-size: 13px; padding: 6px 10px; }
+  }
+
   /* Tab-specific hover colors: bg = brand color, text = white (paper) */
   .topnav__link:hover { color: var(--paper); }
   .topnav__link:hover .topnav__key { color: var(--paper); opacity: 0.7; }
@@ -616,44 +658,6 @@
     margin-top: 56px;
   }
 
-  /* ----- Article page MENU block (above Categories) ----- */
-  .article-page__menu {
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-  }
-  .article-page__menu-head {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-2);
-    display: block;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 16px;
-  }
-  .article-page__menu-items {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 6px;
-  }
-  .article-page__menu-items a {
-    display: flex;
-    align-items: center;
-    padding: 4px 0;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-2);
-    text-decoration: none;
-    transition: color .15s ease, padding-left .15s ease;
-  }
-  .article-page__menu-items a:hover {
-    color: var(--ink);
-    padding-left: 4px;
-  }
-
   .article-page__nav {
     position: sticky;
     top: 96px;
@@ -676,6 +680,14 @@
     border-bottom: 1px solid var(--rule);
   }
   .article-page__nav .nav-group__head::-webkit-details-marker { display: none; }
+  .article-page__nav .nav-group__head--static {
+    display: block;
+    padding: 4px 0 12px;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--rule);
+    cursor: default;
+  }
   .article-page__nav .nav-group__head::after {
     content: "▾";
     margin-left: auto;
@@ -696,6 +708,7 @@
     padding: 3px 0;
   }
   .article-page__nav .nav-items a:hover { color: var(--ink); }
+  .article-page__nav .nav-items a.is-active { color: var(--hover-pink); font-weight: 600; }
   .article-page__nav .nav-items a.is-active {
     color: var(--hover-pink);
     font-weight: 600;
@@ -712,6 +725,7 @@
     padding: 3px 0;
   }
   .article-page__nav .nav-items details summary:hover { color: var(--ink); }
+  .article-page__nav .nav-items details summary.is-active { color: var(--hover-pink); font-weight: 600; }
   .article-page__nav .nav-items details summary::-webkit-details-marker { display: none; }
   .article-page__nav .nav-items details summary::after {
     content: "▾"; margin-left: 4px; font-size: 10px; color: var(--ink-3);
@@ -723,6 +737,8 @@
   .article-page__nav .nav-items details ul li a { font-size: 12px; color: var(--ink-3); }
 
   .article-page__content { min-width: 0; }
+  .article-page__content h2, .article-page__content h3 { scroll-margin-top: 140px; }
+  html { scroll-behavior: smooth; }
   .article-page__content p {
     font-family: var(--body);
     font-size: 17px;
@@ -784,44 +800,6 @@
   @media (max-width: 1100px) {
     .article-page__body { grid-template-columns: 1fr; row-gap: 32px; }
   
-  /* ----- Article page MENU block (above Categories) ----- */
-  .article-page__menu {
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-  }
-  .article-page__menu-head {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-2);
-    display: block;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 16px;
-  }
-  .article-page__menu-items {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 6px;
-  }
-  .article-page__menu-items a {
-    display: flex;
-    align-items: center;
-    padding: 4px 0;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-2);
-    text-decoration: none;
-    transition: color .15s ease, padding-left .15s ease;
-  }
-  .article-page__menu-items a:hover {
-    color: var(--ink);
-    padding-left: 4px;
-  }
-
   .article-page__nav { position: static; }
     .article-page__meta { grid-template-columns: repeat(2, 1fr); gap: 24px 32px; }
   }
@@ -1630,6 +1608,11 @@
       <a class="topnav__link topnav__link--obs" href="observability.html"><span class="topnav__key">[O]</span> Observability Lab</a>
       <a class="topnav__link topnav__link--sec" href="security.html"><span class="topnav__key">[S]</span> Security Lab</a>
       <a class="topnav__link topnav__link--news" href="#"><span class="topnav__key">[N]</span> News</a>
+      <div class="topnav__divider" aria-hidden="true"></div>
+      <a class="topnav__section-link" href="elasticsearch-lab.html#articles">Articles</a>
+      <a class="topnav__section-link" href="elasticsearch-lab.html#examples">Examples</a>
+      <a class="topnav__section-link" href="elasticsearch-lab.html#integration">Integrations</a>
+      <a class="topnav__section-link" href="elasticsearch-lab.html#tutorials">Tutorials</a>
     </div>
     </div><!-- /.topnav__bar -->
   </div>
@@ -1706,38 +1689,18 @@
 
       <!-- LEFT: Navigation tree -->
       <aside class="article-page__nav">
-        <!-- Menu (jumps to homepage sections) -->
-        <div class="article-page__menu">
-          <span class="article-page__menu-head">/ Go to page</span>
-          <ul class="article-page__menu-items">
-            <li><a href="elasticsearch-lab.html#articles">Articles</a></li>
-            <li><a href="elasticsearch-lab.html#examples">Examples</a></li>
-            <li><a href="elasticsearch-lab.html#integration">Integrations</a></li>
-            <li><a href="elasticsearch-lab.html#tutorials">Tutorials</a></li>
-          </ul>
-        </div>
-
-        <details class="nav-group" open>
-          <summary class="nav-group__head">Categories</summary>
-          <ul class="nav-items">
-            <li><a href="#" class="is-active">All Blogs</a></li>
-            <li><details><summary>AI</summary><ul><li><a href="#">Agents</a></li><li><a href="#">RAG</a></li></ul></details></li>
-            <li><a href="#">Developer Experience</a></li>
-            <li><a href="#">Elastic Cloud Hosted</a></li>
-            <li><a href="#">Elastic Cloud Serverless</a></li>
-            <li><a href="#">How To</a></li>
-            <li><details><summary>Hybrid Search</summary><ul><li><a href="#">Analytics</a></li><li><a href="#">Relevance</a></li></ul></details></li>
-            <li><details><summary>Index Data</summary><ul><li><a href="#">Ingest Pipelines</a></li><li><a href="#">Mappings</a></li></ul></details></li>
-            <li><a href="#">Inside Elastic</a></li>
-            <li><a href="#">Integrations</a></li>
-            <li><a href="#">Jina AI</a></li>
-            <li><a href="#">Kubernetes</a></li>
-            <li><a href="#">Lucene</a></li>
-            <li><details><summary>Operations</summary><ul><li><a href="#">Scaling</a></li><li><a href="#">Monitoring</a></li></ul></details></li>
-            <li><details><summary>Query Languages</summary><ul><li><a href="#">ES|QL</a></li><li><a href="#">DSL</a></li></ul></details></li>
-            <li><a href="#">Vector Database</a></li>
-          </ul>
-        </details>
+        <span class="nav-group__head nav-group__head--static">Jump to</span>
+        <ul class="nav-items">
+          <li><a href="#experiments" class="is-active" data-jump="experiments">The experiments</a></li>
+          <li><details open>
+            <summary data-jump="failed">What failed, and why it matters</summary>
+            <ul>
+              <li><a href="#why-passive" data-jump="why-passive">Why passive hints failed</a></li>
+              <li><a href="#what-worked" data-jump="what-worked">What worked instead</a></li>
+            </ul>
+          </details></li>
+          <li><a href="#conclusions" data-jump="conclusions">The two conclusions</a></li>
+        </ul>
       </aside>
 
       <!-- RIGHT: Article body -->
@@ -1753,7 +1716,7 @@
 
         <p>This post walks through what we found, what surprised us, and the two conclusions we think matter most for anyone building developer tools in an agent-first world.</p>
 
-        <h2>The experiments</h2>
+        <h2 id="experiments">The experiments</h2>
 
         <p>A quick sketch of the landscape. Our team ran roughly a dozen experiments aimed at a single question: how do you get an AI agent to use Elasticsearch correctly? "Correctly" here means using current API versions, following integration best practices, and leveraging the Elastic skill. This is a structured set of instructions and references that agents can consume to understand our platform.</p>
 
@@ -1765,27 +1728,43 @@
 
         <p><strong>Distribution plays.</strong> We put skills on <a href="#">docs.elastic.co</a>, added install buttons to documentation pages, and ran an onboarding experiment offering users an "AI/agent" path alongside the traditional dashboard flow.</p>
 
-        <p>The results split very cleanly. Passive hints failed while active prompts and distribution plays worked, some of them far better than expected.</p>
+        <p>The results split very cleanly. Passive hints failed while active prompts and distribution plays worked, some of them far better than expected. Before we get into the why, it's worth pausing on how unintuitive that split is. Most of our priors said the opposite. We assumed the agents we'd be working with were broadly competent generalists. We assumed they'd read what we put in front of them. We assumed that a well-placed comment in source code would do real work.</p>
 
-        <h2>What failed, and why it matters</h2>
+        <p>None of that was wrong, exactly, but it was the wrong frame. The agents we tested with, even the strongest ones, behaved less like attentive readers and more like rushed contractors who were trying to ship something today. They wanted clear instructions, not breadcrumbs. They wanted a path, not a sign post.</p>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <h2 id="failed">What failed, and why it matters</h2>
 
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>The clearest signal from our experiments was this: agents do not really "discover" guidance the way human developers do. When we left structured cues in places we expected agents to look — README files, source comments, response headers — they simply did not look. The cues sat there, perfectly available, and were ignored almost entirely.</p>
 
-        <h3>Why passive hints failed</h3>
+        <p>This is harder to swallow than it sounds. We've spent two decades building developer ergonomics around the assumption that good engineers will read the room. They'll notice a deprecation warning. They'll click a link in an error message. They'll skim a README before reaching for the API. Agents, in our tests, did none of these things consistently. They had a goal, they had a tool, and they used the tool to make progress on the goal. Anything between those two points was negotiable, and often skipped.</p>
 
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <p>What makes this matter beyond our specific case is that an enormous amount of developer-facing software is structured around passive discovery. SDKs hide their best practices in long-form docs. CLIs assume users will run <code>--help</code>. Error messages link out to runbooks. None of that machinery works the way we expect when the consumer is an agent.</p>
 
-        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        <h3 id="why-passive">Why passive hints failed</h3>
 
-        <h2>The two conclusions</h2>
+        <p>We tried three flavors of passive hint, each with the same disappointing result. We added structured comments to SDK source files marking which methods were preferred over which others. We attached <code>X-Recommended-Endpoint</code> headers to API responses pointing at newer alternatives. And we placed <code>AGENTS.md</code> files in package directories, expecting the agent to find them on first read.</p>
 
-        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa.</p>
+        <p>The SDK comments were ignored because agents typically don't scan implementation source when they can read a signature. The response headers were ignored because agents don't read headers unless they have explicit reason to. And the <code>AGENTS.md</code> files were ignored because agents don't grep around looking for documentation. They reach for what they already know.</p>
 
-        <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus.</p>
+        <p>There's a tidy lesson in here about surface area. If your guidance is not on the path the agent is already walking, the guidance does not exist. It does not matter how clearly it's written, how well-placed it is, or how strongly it's worded. Off-path is invisible.</p>
 
-        <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+        <h3 id="what-worked">What worked instead</h3>
+
+        <p>Active prompts and distribution plays worked, and they worked for the same reason passive hints failed. They put guidance directly into the agent's path of least resistance. A CLI that prints a one-line install hint at login time gets read. A docs page that loads with an install button visible above the fold gets clicked. An onboarding flow that offers an "AI/agent" track at sign-up time gets followed.</p>
+
+        <p>None of this is subtle. The win was not from cleverer hints, it was from putting the same hints in places agents could not avoid. The lesson, then, is geometric: position matters more than message.</p>
+
+        <h2 id="conclusions">The two conclusions</h2>
+
+        <p>We came out of this stretch of work with two takeaways that we think matter beyond our specific platform.</p>
+
+        <p><strong>First, treat agents like users with very short attention spans and very long memories.</strong> They will skip almost everything you put in front of them on the first pass. But if they do internalize a piece of guidance — usually because they hit it head-on and could not route around it — they will apply that guidance consistently across hundreds of downstream calls. The cost of getting through is high, the payoff is durable.</p>
+
+        <p><strong>Second, build for the path, not the periphery.</strong> The biggest gains we saw did not come from writing better docs. They came from moving good docs into the few choke points where agents could not skip them. Login flows, CLI help output, onboarding screens, and install buttons on landing pages did most of the work. The long-form material still matters, but it matters most as a place to land after the agent has already been pointed there.</p>
+
+        <p>That second one is the harder shift culturally. It asks teams that have spent years polishing their reference docs to also obsess over the half-dozen surfaces that actually route attention. The reference docs are still right. They're just no longer enough.</p>
+
+        <p>We're continuing this work and we'll share more as we learn. If you're building developer tools and running similar experiments, we'd love to hear what's working for you and what isn't. The space is moving fast, and the answers are still wide open.</p>
       </div>
 
     </div>
@@ -1841,6 +1820,32 @@
 </div>
 
 <script>
+
+  // ----- Scroll-spy for the Jump-to article nav -----
+  (function () {
+    const links = Array.from(document.querySelectorAll('.article-page__nav [data-jump]'));
+    if (!links.length) return;
+    const targets = links
+      .map(l => {
+        const id = l.dataset.jump;
+        const el = document.getElementById(id);
+        return el ? { id, el, link: l } : null;
+      })
+      .filter(Boolean);
+
+    function update() {
+      const scrollY = window.scrollY + 180; // offset for sticky nav
+      let activeIdx = 0;
+      for (let i = 0; i < targets.length; i++) {
+        if (targets[i].el.offsetTop <= scrollY) activeIdx = i;
+      }
+      links.forEach(l => l.classList.remove('is-active'));
+      targets[activeIdx].link.classList.add('is-active');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
   document.querySelectorAll(".theme-toggle").forEach((group) => {
     group.querySelectorAll(".theme-toggle__btn").forEach((btn) => {
       btn.addEventListener("click", () => {
