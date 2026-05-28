@@ -81,12 +81,32 @@
      ============================================================ */
   .topnav {
     position: sticky;
-    top: 0;
+    top: 16px;
     z-index: 100;
     background: transparent;
-    pointer-events: none; /* let scroll through the empty gaps */
+    pointer-events: none;
   }
-  .topnav__inner > *, .topnav__link, .topnav__console { pointer-events: auto; }
+  .topnav__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 8px var(--margin-x);
+    background: transparent;
+    pointer-events: none;
+  }
+  .topnav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: auto;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(40px) saturate(1.8);
+    -webkit-backdrop-filter: blur(40px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
   .topnav__inner {
     max-width: var(--container);
     margin: 0 auto;
@@ -99,9 +119,9 @@
   .topnav__group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
     font-family: var(--mono);
-    font-size: 16px;
+    font-size: 13px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink);
@@ -112,15 +132,11 @@
   }
   .topnav__home svg { width: 18px; height: 20px; }
   .topnav__link {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 14px;
     border-radius: 0;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: background .15s ease, color .15s ease, border-color .15s ease;
+    background: transparent;
+    transition: background .15s ease, color .15s ease;
   }
   .topnav__key { color: var(--ink-3); }
   /* Tab-specific hover colors: bg = brand color, text = white (paper) */
@@ -626,20 +642,12 @@
   .article-page__menu-items a {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 4px 0;
     font-family: var(--mono);
     font-size: 12px;
     color: var(--ink-2);
     text-decoration: none;
     transition: color .15s ease, padding-left .15s ease;
-  }
-  .article-page__menu-items a::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    flex-shrink: 0;
-    background: transparent;
   }
   .article-page__menu-items a:hover {
     color: var(--ink);
@@ -802,20 +810,12 @@
   .article-page__menu-items a {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 4px 0;
     font-family: var(--mono);
     font-size: 12px;
     color: var(--ink-2);
     text-decoration: none;
     transition: color .15s ease, padding-left .15s ease;
-  }
-  .article-page__menu-items a::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    flex-shrink: 0;
-    background: transparent;
   }
   .article-page__menu-items a:hover {
     color: var(--ink);
@@ -1624,12 +1624,14 @@
 <!-- ============== TOP KEYBOARD NAV ============== -->
 <nav class="topnav" aria-label="Primary">
   <div class="topnav__inner">
+    <div class="topnav__bar">
     <div class="topnav__group topnav__group--main">
       <a class="topnav__link topnav__link--es" href="elasticsearch-lab.html"><span class="topnav__key">[S]</span> Elasticsearch Lab</a>
       <a class="topnav__link topnav__link--obs" href="observability.html"><span class="topnav__key">[O]</span> Observability Lab</a>
       <a class="topnav__link topnav__link--sec" href="security.html"><span class="topnav__key">[S]</span> Security Lab</a>
       <a class="topnav__link topnav__link--news" href="#"><span class="topnav__key">[N]</span> News</a>
     </div>
+    </div><!-- /.topnav__bar -->
   </div>
 </nav>
 
