@@ -282,12 +282,34 @@
 
   .topnav {
     position: sticky;
-    top: 0;
+    top: 16px;
     z-index: 100;
     background: transparent;
-    pointer-events: none; /* let scroll through the empty gaps */
+    pointer-events: none;
   }
-  .topnav__inner > *, .topnav__link, .topnav__console { pointer-events: auto; }
+  .topnav__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 8px var(--margin-x);
+    background: transparent;
+    pointer-events: none;
+  }
+  /* The actual frosted bar — sits inside topnav__inner so its edges align
+     exactly with the marketing nav above (elastic logo → contact sales) */
+  .topnav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: auto;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(40px) saturate(1.8);
+    -webkit-backdrop-filter: blur(40px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
   .topnav__inner {
     max-width: var(--container);
     margin: 0 auto;
@@ -300,9 +322,9 @@
   .topnav__group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
     font-family: var(--mono);
-    font-size: 16px;
+    font-size: 13px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink);
@@ -313,17 +335,57 @@
   }
   .topnav__home svg { width: 18px; height: 20px; }
   .topnav__link {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 14px;
     border-radius: 0;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: background .15s ease, color .15s ease, border-color .15s ease;
+    background: transparent;
+    transition: background .15s ease, color .15s ease;
   }
   .topnav__key { color: var(--ink-3); }
+
+  /* Vertical divider between lab tabs and section links */
+  .topnav__divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(24, 24, 24, 0.2);
+    margin: 0 12px;
+  }
+  /* Section links: lighter visual weight, NO key prefix; in-page jumps */
+  .topnav__section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color .15s ease, background .15s ease;
+  }
+  .topnav__section-link:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .topnav__section-link::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    background: transparent;
+  }
+  .topnav__section-link.is-active {
+    color: var(--ink);
+  }
+  .topnav__section-link.is-active::before { background: var(--ink); }
+
+  @media (max-width: 1100px) {
+    .topnav__divider { display: none; }
+    .topnav__section-link { font-size: 13px; padding: 6px 10px; }
+  }
+
   /* Tab-specific hover colors: bg = brand color, text = white (paper) */
   .topnav__link:hover { color: var(--paper); }
   .topnav__link:hover .topnav__key { color: var(--paper); opacity: 0.7; }
@@ -705,12 +767,11 @@
     background-size: 16px 16px;
     overflow: hidden;
   }
-  /* In the new vertical featured layout, the figure is a smaller landscape
-     thumbnail (not full column width) so the article text can take prominence */
+  /* Restored: large square figure on the left, fills the column at 1:1 */
   .featured__left .fig-box {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1 / 1;
     width: 100%;
-    max-width: 360px;
+    max-width: none;
   }
   .fig-box__corner {
     position: absolute;
@@ -781,14 +842,15 @@
     background-repeat: repeat-y;
   }
   .featured__left {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(260px, 1.2fr);
+    gap: 40px;
+    align-items: start;
   }
   .featured__right {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
   }
 
   .card-tagrow {
@@ -855,10 +917,11 @@
   }
 
   .small-post {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 140px 1fr;
     gap: 20px;
-    padding-bottom: 28px;
+    align-items: start;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--hairline);
     text-decoration: none;
     color: inherit;
@@ -870,18 +933,18 @@
   }
   .small-post__thumb {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     border: 1px solid var(--rule-strong);
     background-color: var(--paper-2);
     background-image: radial-gradient(circle at center, rgba(24,24,24,0.25) 1px, transparent 1.5px);
-    background-size: 12px 12px;
+    background-size: 10px 10px;
   }
-  .small-post__body { display: flex; flex-direction: column; gap: 20px; }
+  .small-post__body { display: flex; flex-direction: column; gap: 12px; }
   .small-post__title {
     font-family: var(--display);
     font-weight: 600;
-    font-size: 24px;
-    line-height: 1.2;
+    font-size: 20px;
+    line-height: 1.25;
     letter-spacing: -0.015em;
     color: var(--ink);
   }
@@ -890,28 +953,12 @@
 
   /* ----- Content area with sticky page-nav rail (wraps featured + topics) ----- */
   .content-with-nav {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    column-gap: 96px;
-    align-items: start;
+    display: block;
     margin-top: 64px;
   }
-  .content-with-nav__rail {
-    position: sticky;
-    top: 96px; /* clears the sticky topnav (~60px) with breathing room */
-    align-self: start;
-    margin-top: 32px; /* aligns /Menu with /Featured Post (inside .featured padding-top) */
-    transition: top 0.25s ease;
-  }
-  /* When user scrolls past the topnav, bump the rail's top offset for more breathing room */
-  body.is-scrolled .content-with-nav__rail {
-    top: 140px;
-  }
+  /* (left rail removed — section links now live in the topnav bar) */
   .content-with-nav__main { min-width: 0; }
-  @media (max-width: 1100px) {
-    .content-with-nav { grid-template-columns: 1fr; row-gap: 24px; }
-    .content-with-nav__rail { position: static; }
-  }
+  /* (content-with-nav left rail responsive collapse no longer needed) */
 
   /* ============================================================
      EXAMPLES — table of practical resources (Stripe Changelog style)
@@ -1804,12 +1851,19 @@
 <!-- ============== TOP KEYBOARD NAV ============== -->
 <nav class="topnav" aria-label="Primary">
   <div class="topnav__inner">
+    <div class="topnav__bar">
     <div class="topnav__group topnav__group--main">
       <a class="topnav__link topnav__link--es" href="elasticsearch-lab.html"><span class="topnav__key">[S]</span> Elasticsearch Lab</a>
       <a class="topnav__link topnav__link--obs" href="observability.html"><span class="topnav__key">[O]</span> Observability Lab</a>
       <a class="topnav__link topnav__link--sec" href="security.html"><span class="topnav__key">[S]</span> Security Lab</a>
       <a class="topnav__link topnav__link--news" href="#"><span class="topnav__key">[N]</span> News</a>
+      <div class="topnav__divider" aria-hidden="true"></div>
+      <a class="topnav__section-link is-active" href="#articles" data-section="articles">Articles</a>
+      <a class="topnav__section-link" href="#examples" data-section="examples">Examples</a>
+      <a class="topnav__section-link" href="#integration" data-section="integration">Integrations</a>
+      <a class="topnav__section-link" href="#tutorials" data-section="tutorials">Tutorials</a>
     </div>
+    </div><!-- /.topnav__bar -->
   </div>
 </nav>
 
@@ -1830,19 +1884,6 @@
 
   <!-- =========== CONTENT WITH STICKY PAGE NAV (featured + topics) =========== -->
   <div class="content-with-nav">
-
-    <!-- Sticky page-nav rail — same visual as the Topics page-nav variant -->
-    <aside class="filter content-with-nav__rail">
-      <div class="filter__top">
-        <span class="meta">Menu</span>
-      </div>
-      <ul class="pagenav__items pagenav__items--top">
-        <li><a href="#articles" class="is-active">Articles</a></li>
-        <li><a href="#examples">Examples</a></li>
-        <li><a href="#integration">Integrations</a></li>
-        <li><a href="#tutorials">Tutorials</a></li>
-      </ul>
-    </aside>
 
     <div class="content-with-nav__main">
 
@@ -1905,6 +1946,7 @@
       <!-- RIGHT: 3 stacked smaller posts -->
       <div class="featured__right">
         <a class="small-post" href="article.html">
+          <div class="small-post__thumb" aria-hidden="true"></div>
           <div class="small-post__body">
             <div class="card-tagrow">
               <span class="tag-pill">Vectors</span>
@@ -1918,6 +1960,7 @@
         </a>
 
         <a class="small-post" href="article.html">
+          <div class="small-post__thumb" aria-hidden="true"></div>
           <div class="small-post__body">
             <div class="card-tagrow">
               <span class="tag-pill">ELSER</span>
@@ -1931,6 +1974,7 @@
         </a>
 
         <a class="small-post" href="article.html">
+          <div class="small-post__thumb" aria-hidden="true"></div>
           <div class="small-post__body">
             <div class="card-tagrow">
               <span class="tag-pill">Engineering</span>
@@ -2449,7 +2493,7 @@
   (function () {
     const ids = ["articles", "examples", "integration", "tutorials"];
     const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
-    const links = Array.from(document.querySelectorAll('.pagenav__items--top a'));
+    const links = Array.from(document.querySelectorAll('.topnav__section-link'));
     if (!sections.length || !links.length) return;
 
     function setActive() {
